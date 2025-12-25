@@ -24,7 +24,6 @@ namespace TaskManagerWPF.Views
             public string ProjectName { get; set; } = "Без проекта";
             public string PriorityName { get; set; } = "Не задан";
             public string StatusName { get; set; } = "Не задан";
-            public string AssigneeNames { get; set; } = "Не назначен";
             public DateTime? DueDate { get; set; }
             public string DueDateDisplay => DueDate?.ToString("dd.MM.yyyy") ?? "Нет срока";
             public bool IsOverdue => DueDate.HasValue && DueDate.Value < DateTime.Now;
@@ -61,8 +60,7 @@ namespace TaskManagerWPF.Views
                         DueDate = task.DueDate,
                         ProjectName = task.Project?.Name ?? "Без проекта",
                         PriorityName = task.Priority?.Name ?? "Не задан",
-                        StatusName = task.Status?.Name ?? "Не задан",
-                        AssigneeNames = "Не назначен" 
+                        StatusName = task.Status?.Name ?? "Не задан"
                     };
 
                     _tasks.Add(displayItem);

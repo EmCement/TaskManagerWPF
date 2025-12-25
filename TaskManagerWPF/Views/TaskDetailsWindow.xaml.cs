@@ -69,6 +69,7 @@ namespace TaskManagerWPF.Views
                 _projects = await projectsTask;
                 _priorities = await prioritiesTask;
                 _statuses = await statusesTask;
+                // _users = await usersTask;
 
                 FillComboBoxes();
 
@@ -172,8 +173,6 @@ namespace TaskManagerWPF.Views
                         }
                     }
                 }
-
-                AssigneesTextBox.Text = "Исполнители будут загружены позже";
             }
             catch (Exception ex)
             {
@@ -181,6 +180,7 @@ namespace TaskManagerWPF.Views
                     "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
+
 
         private async void Save_Click(object sender, RoutedEventArgs e)
         {
@@ -208,8 +208,7 @@ namespace TaskManagerWPF.Views
                         ? null
                         : DescriptionTextBox.Text.Trim(),
                     ProjectId = (int)selectedProject.Tag!,
-                    DueDate = DueDatePicker.SelectedDate,
-                    AssigneeIds = ParseAssigneeIds(AssigneesTextBox.Text) 
+                    DueDate = DueDatePicker.SelectedDate
                 };
 
                 if (PriorityComboBox.SelectedItem is ComboBoxItem selectedPriority &&
@@ -253,11 +252,6 @@ namespace TaskManagerWPF.Views
                 SaveButton.IsEnabled = true;
                 SaveButton.Content = _taskId.HasValue ? "Обновить" : "Создать";
             }
-        }
-
-        private List<int>? ParseAssigneeIds(string assigneesText)
-        {
-            return null;
         }
 
         private void Cancel_Click(object sender, RoutedEventArgs e)

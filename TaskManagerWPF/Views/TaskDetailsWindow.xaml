@@ -67,15 +67,6 @@
                 <DatePicker x:Name="DueDatePicker" 
                            Height="30"
                            Margin="0,0,0,15"/>
-
-                <TextBlock Text="Исполнители:" Margin="0,0,0,5"/>
-                <TextBox x:Name="AssigneesTextBox" 
-                        Height="60" 
-                        Margin="0,0,0,15"
-                        AcceptsReturn="True"
-                        TextWrapping="Wrap"
-                        VerticalScrollBarVisibility="Auto"
-                        ToolTip="Введите имена исполнителей через запятую"/>
             </StackPanel>
         </ScrollViewer>
 

@@ -152,11 +152,10 @@
                                     <StackPanel>
                                         <TextBlock Text="{Binding Title}" 
                                                   FontWeight="SemiBold"/>
-                                        <TextBlock Text="{Binding Project.Name, FallbackValue='Без проекта'}" 
+                                        <TextBlock Text="{Binding ProjectName, FallbackValue='Проекта нет'}" 
                                                   Foreground="#7f8c8d"
                                                   FontSize="12"/>
-                                        <TextBlock Text="{Binding DueDate, StringFormat='Срок: {0:dd.MM.yyyy}'}" 
-                                                  FontSize="12">
+                                        <TextBlock Text="{Binding DueDateDisplay}" FontSize="12">
                                             <TextBlock.Style>
                                                 <Style TargetType="TextBlock">
                                                     <Setter Property="Foreground" Value="#34495e"/>

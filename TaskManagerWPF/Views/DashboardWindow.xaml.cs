@@ -14,13 +14,23 @@ namespace TaskManagerWPF.Views
         private readonly ApiService _apiService;
         private readonly NavigationService _navigationService;
 
-
         public class TaskDisplayItem
         {
             public int Id { get; set; }
             public string Title { get; set; } = null!;
             public TaskWithDetails Task { get; set; } = null!;
-            public bool IsOverdue => Task.DueDate.HasValue && Task.DueDate.Value < DateTime.Now;
+            public string ProjectName => Task.Project?.Name ?? "Без проекта";
+            public DateTime? DueDate => Task.DueDate;
+            public string DueDateDisplay => Task.DueDate.HasValue
+                ? $"Срок: {Task.DueDate.Value:dd.MM.yyyy}"
+                : "Срок не указан";
+            public string StatusName => Task.Status?.Name ?? "Без статуса";
+            public string PriorityName => Task.Priority?.Name ?? "Без приоритета";
+            public string Description => Task.Description ?? "";
+            public bool IsOverdue => Task.DueDate.HasValue &&
+                                    Task.DueDate.Value < DateTime.Now &&
+                                    (Task.Status == null || !Task.Status.IsFinal);
+            public bool IsCompleted => Task.Status != null && Task.Status.IsFinal;
         }
 
         private ObservableCollection<TaskDisplayItem> _recentTasks = new ObservableCollection<TaskDisplayItem>();
@@ -35,7 +45,7 @@ namespace TaskManagerWPF.Views
 
             WelcomeText.Text = $"Добро пожаловать, {currentUser.Username}!";
 
-            LoadDashboardData(); 
+            LoadDashboardData();
 
             RecentTasksList.ItemsSource = _recentTasks;
         }
@@ -53,7 +63,6 @@ namespace TaskManagerWPF.Views
                 var tasks = await tasksTask;
 
                 UpdateStatistics(projects, tasks);
-
                 UpdateRecentTasks(tasks);
             }
             catch (Exception ex)
@@ -67,21 +76,19 @@ namespace TaskManagerWPF.Views
         {
             TotalProjectsText.Text = projects.Count.ToString();
 
-            int totalTasks = tasks.Count;
-
             var activeTasks = tasks.Count(t =>
                 t.Status == null || !t.Status.IsFinal);
             ActiveTasksText.Text = activeTasks.ToString();
 
             var overdueTasks = tasks.Count(t =>
-                t.DueDate.HasValue && t.DueDate.Value < DateTime.Now &&
-                (t.Status == null || !t.Status.IsFinal));
+                (t.Status == null || !t.Status.IsFinal) &&
+                t.DueDate.HasValue &&
+                t.DueDate.Value < DateTime.Now);
             OverdueTasksText.Text = overdueTasks.ToString();
 
             var completedTasks = tasks.Count(t =>
                 t.Status != null && t.Status.IsFinal);
             CompletedTasksText.Text = completedTasks.ToString();
-
         }
 
         private void UpdateRecentTasks(System.Collections.Generic.List<TaskWithDetails> tasks)
@@ -106,14 +113,12 @@ namespace TaskManagerWPF.Views
         private void NewProject_Click(object sender, RoutedEventArgs e)
         {
             _navigationService.ShowProjectCreateDialog(this);
-
             LoadDashboardData();
         }
 
         private void NewTask_Click(object sender, RoutedEventArgs e)
         {
             _navigationService.ShowTaskDetailsDialog(null, this);
-
             LoadDashboardData();
         }
 
@@ -137,7 +142,6 @@ namespace TaskManagerWPF.Views
             if (RecentTasksList.SelectedItem is TaskDisplayItem selectedTask)
             {
                 _navigationService.ShowTaskDetailsDialog(selectedTask.Id, this);
-
                 LoadDashboardData();
             }
         }

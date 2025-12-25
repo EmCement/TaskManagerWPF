@@ -6,7 +6,7 @@ namespace TaskManagerWPF.Models
 {
     public class ValidationError
     {
-        public List<object> Loc { get; set; } = new();  
+        public List<object> Loc { get; set; } = new();
         public string Msg { get; set; } = null!;
         public string Type { get; set; } = null!;
     }
@@ -21,6 +21,8 @@ namespace TaskManagerWPF.Models
         public string Username { get; set; } = null!;
         public string Email { get; set; } = null!;
         public string Password { get; set; } = null!;
+
+        [JsonPropertyName("full_name")]
         public string? FullName { get; set; }
     }
 
@@ -41,9 +43,16 @@ namespace TaskManagerWPF.Models
         public int Id { get; set; }
         public string Username { get; set; } = null!;
         public string Email { get; set; } = null!;
+
+        [JsonPropertyName("full_name")]
         public string? FullName { get; set; }
+
         public string Role { get; set; } = "user";
+
+        [JsonPropertyName("is_active")]
         public bool IsActive { get; set; }
+
+        [JsonPropertyName("created_at")]
         public DateTime CreatedAt { get; set; }
     }
 
@@ -52,8 +61,14 @@ namespace TaskManagerWPF.Models
         public int Id { get; set; }
         public string Name { get; set; } = null!;
         public string? Description { get; set; }
+
+        [JsonPropertyName("created_by_id")]
         public int? CreatedById { get; set; }
+
+        [JsonPropertyName("created_at")]
         public DateTime CreatedAt { get; set; }
+
+        [JsonPropertyName("updated_at")]
         public DateTime UpdatedAt { get; set; }
     }
 
@@ -75,7 +90,11 @@ namespace TaskManagerWPF.Models
     {
         public int Id { get; set; }
         public string Name { get; set; } = null!;
+
+        [JsonPropertyName("order_num")]
         public int OrderNum { get; set; }
+
+        [JsonPropertyName("is_final")]
         public bool IsFinal { get; set; }
     }
 
@@ -84,12 +103,26 @@ namespace TaskManagerWPF.Models
         public int Id { get; set; }
         public string Title { get; set; } = null!;
         public string? Description { get; set; }
+
+        [JsonPropertyName("project_id")]
         public int ProjectId { get; set; }
+
+        [JsonPropertyName("priority_id")]
         public int? PriorityId { get; set; }
+
+        [JsonPropertyName("status_id")]
         public int? StatusId { get; set; }
+
+        [JsonPropertyName("created_by_id")]
         public int? CreatedById { get; set; }
+
+        [JsonPropertyName("due_date")]
         public DateTime? DueDate { get; set; }
+
+        [JsonPropertyName("created_at")]
         public DateTime CreatedAt { get; set; }
+
+        [JsonPropertyName("updated_at")]
         public DateTime UpdatedAt { get; set; }
     }
 
@@ -128,15 +161,25 @@ namespace TaskManagerWPF.Models
     {
         public int Id { get; set; }
         public string Content { get; set; } = null!;
+
+        [JsonPropertyName("task_id")]
         public int TaskId { get; set; }
+
+        [JsonPropertyName("user_id")]
         public int? UserId { get; set; }
+
+        [JsonPropertyName("created_at")]
         public DateTime CreatedAt { get; set; }
+
+        [JsonPropertyName("updated_at")]
         public DateTime UpdatedAt { get; set; }
     }
 
     public class CommentCreate
     {
         public string Content { get; set; } = null!;
+
+        [JsonPropertyName("task_id")]
         public int TaskId { get; set; }
     }
 }

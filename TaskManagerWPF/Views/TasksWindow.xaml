@@ -56,7 +56,6 @@
                     <DataGridTextColumn Header="Статус" Width="110" Binding="{Binding StatusName}"/>
                     <DataGridTextColumn Header="Срок" Width="100" 
                                        Binding="{Binding DueDate, StringFormat='dd.MM.yyyy'}"/>
-                    <DataGridTextColumn Header="Исполнитель" Width="130" Binding="{Binding AssigneeNames}"/>
                     <DataGridTemplateColumn Header="Действия" Width="120">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
