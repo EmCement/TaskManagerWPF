@@ -1,0 +1,88 @@
+﻿<Window x:Class="TaskManagerWPF.Views.TasksWindow"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             Background="#ecf0f1">
+
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- Заголовок и кнопки -->
+        <Grid Grid.Row="0" Margin="0,0,0,20">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+
+            <TextBlock Text="Задачи" 
+                      FontSize="28" 
+                      FontWeight="Bold"
+                      Foreground="#2c3e50"
+                      VerticalAlignment="Center"/>
+
+            <StackPanel Grid.Column="1" 
+                       Orientation="Horizontal">
+                <Button Content="➕ Новая задача"
+                       Background="#2ecc71"
+                       Foreground="White"
+                       Width="120"
+                       Height="35"
+                       Margin="5"
+                       Click="NewTask_Click"/>
+                <Button Content="🔍 Фильтр"
+                       Background="#3498db"
+                       Foreground="White"
+                       Width="120"
+                       Height="35"
+                       Margin="5"
+                       Click="Filter_Click"/>
+            </StackPanel>
+        </Grid>
+
+        <!-- Список задач (DataGrid) -->
+        <Border Grid.Row="1" 
+               Background="White"
+               CornerRadius="8"
+               Padding="10">
+            <DataGrid x:Name="TasksDataGrid"
+                     AutoGenerateColumns="False"
+                     CanUserAddRows="False"
+                     IsReadOnly="True">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="ID" Width="50" Binding="{Binding Id}"/>
+                    <DataGridTextColumn Header="Название" Width="200" Binding="{Binding Title}"/>
+                    <DataGridTextColumn Header="Проект" Width="120" Binding="{Binding ProjectName}"/>
+                    <DataGridTextColumn Header="Приоритет" Width="90" Binding="{Binding PriorityName}"/>
+                    <DataGridTextColumn Header="Статус" Width="110" Binding="{Binding StatusName}"/>
+                    <DataGridTextColumn Header="Срок" Width="100" 
+                                       Binding="{Binding DueDate, StringFormat='dd.MM.yyyy'}"/>
+                    <DataGridTextColumn Header="Исполнитель" Width="130" Binding="{Binding AssigneeNames}"/>
+                    <DataGridTemplateColumn Header="Действия" Width="120">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <Button Content="✏️" 
+                                           Width="30"
+                                           Height="25"
+                                           Margin="2" 
+                                           Tag="{Binding Id}"
+                                           Click="EditTask_Click"/>
+                                    <Button Content="🗑️" 
+                                           Width="30"
+                                           Height="25"
+                                           Margin="2" 
+                                           Background="Red"
+                                           Foreground="White"
+                                           Tag="{Binding Id}"
+                                           Click="DeleteTask_Click"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                </DataGrid.Columns>
+            </DataGrid>
+        </Border>
+    </Grid>
+</Window>
